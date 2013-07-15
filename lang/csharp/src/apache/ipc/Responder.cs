@@ -22,14 +22,14 @@ using System.IO;
 using Avro.Generic;
 using Avro.IO;
 using Avro.Specific;
-using log4net;
+using NLog;
 using org.apache.avro.ipc;
 
 namespace Avro.ipc
 {
     public abstract class Responder
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof (Responder));
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
         private static readonly Schema META = MapSchema.CreateMap(PrimitiveSchema.NewInstance("bytes"));
 
