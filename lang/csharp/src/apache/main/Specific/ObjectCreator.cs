@@ -138,6 +138,10 @@ namespace Avro.Specific
                 Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
                 foreach (Assembly assembly in assemblies)
                 {
+                    // Fix for Mono 3.0.10
+                    if (assembly.FullName.StartsWith("MonoDevelop.NUnit"))
+                        continue;
+
                     types = assembly.GetTypes();
 
                     // Change the search to look for Types by both NAME and FULLNAME
