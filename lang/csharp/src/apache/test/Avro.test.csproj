@@ -89,6 +89,12 @@
     <Compile Include="File\FileTests.cs" />
     <Compile Include="Generic\GenericTests.cs" />
     <Compile Include="IO\BinaryCodecTests.cs" />
+    <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\All.cs" />
+    <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\AllCallback.cs" />
+    <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\AllEnum.cs" />
+    <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\AllTestRecord.cs" />
+    <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\AllTestRecordPartial.cs" />
+    <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\FixedTest.cs" />
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\Kind.cs" />
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\Mail.cs" />
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\MailCallback.cs" />
@@ -102,6 +108,7 @@
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\TestRecordWithUnion.cs" />
     <Compile Include="Ipc\LocalTransceiverTest.cs" />
     <Compile Include="Ipc\MailResponder.cs" />
+    <Compile Include="Ipc\SerializationTest.cs" />
     <Compile Include="Ipc\SocketServerConcurrentExecutionTest.cs" />
     <Compile Include="Ipc\SocketServerTest.cs" />
     <Compile Include="Ipc\SocketServerWithCallbacksTest.cs" />

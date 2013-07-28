@@ -156,6 +156,7 @@ namespace Avro.Specific
                         break;
                 }
             }
+
             if (type == null)
                 throw new AvroException("Unable to find type " + name + " in all loaded assemblies");
 

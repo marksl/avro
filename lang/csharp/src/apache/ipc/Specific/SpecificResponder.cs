@@ -84,6 +84,16 @@ namespace Avro.ipc.Specific
             var namedSchema = field.Schema as NamedSchema;
             string name = namedSchema != null ? namedSchema.Fullname : field.Schema.Name;
 
+            if (name == "array")
+            {
+                name= ((((Avro.ArraySchema) (field.Schema))).ItemSchema).Name;
+            }
+            else if (name == "map")
+            {
+                name = (((Avro.MapSchema)(field.Schema)).ValueSchema).Name;
+                //return string.Format("System.Collections.Generic.IDic<{0}>", ((((Avro.ArraySchema)(field.Schema))).ItemSchema).Name);
+            }
+
             string value;
             return BaseTypes.TryGetValue(name, out value) ? value : name;
         }
