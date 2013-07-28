@@ -632,8 +632,7 @@ namespace Avro.Test.Ipc
             Assert.IsNull(future2.Error);
         }
 
-        [Ignore]
-        [Test]
+        //[Test]
         public void PerformanceTest()
         {
             const int threadCount = 8;
