@@ -632,52 +632,51 @@ namespace Avro.Test.Ipc
             Assert.IsNull(future2.Error);
         }
 
-        //[Ignore]
         //[Test]
-        //public void PerformanceTest()
-        //{
-        //    const int threadCount = 8;
-        //    const long runTimeMillis = 10*1000L;
+        public void PerformanceTest()
+        {
+            const int threadCount = 8;
+            const long runTimeMillis = 10*1000L;
 
 
-        //    long rpcCount = 0;
-        //    int[] runFlag = {1};
+            long rpcCount = 0;
+            int[] runFlag = {1};
 
-        //    var startLatch = new CountdownLatch(threadCount);
-        //    for (int ii = 0; ii < threadCount; ii++)
-        //    {
-        //        new Thread(() =>
-        //                       {
-        //                           {
-        //                               try
-        //                               {
-        //                                   startLatch.Signal();
-        //                                   startLatch.Wait(2000);
+            var startLatch = new CountdownLatch(threadCount);
+            for (int ii = 0; ii < threadCount; ii++)
+            {
+                new Thread(() =>
+                               {
+                                   {
+                                       try
+                                       {
+                                           startLatch.Signal();
+                                           startLatch.Wait(2000);
 
-        //                                   while (Interlocked.Add(ref runFlag[0], 0) == 1)
-        //                                   {
-        //                                       Interlocked.Increment(ref rpcCount);
-        //                                       Assert.AreEqual("Hello, World!", simpleClient.hello("World!"));
-        //                                   }
-        //                               }
-        //                               catch (Exception e)
-        //                               {
-        //                                   Console.WriteLine(e);
-        //                               }
-        //                           }
-        //                       }).Start();
-        //    }
+                                           while (Interlocked.Add(ref runFlag[0], 0) == 1)
+                                           {
+                                               Interlocked.Increment(ref rpcCount);
+                                               Assert.AreEqual("Hello, World!", simpleClient.hello("World!"));
+                                           }
+                                       }
+                                       catch (Exception e)
+                                       {
+                                           Console.WriteLine(e);
+                                       }
+                                   }
+                               }).Start();
+            }
 
-        //    startLatch.Wait(2000);
-        //    Thread.Sleep(2000);
-        //    Interlocked.Exchange(ref runFlag[0], 1);
+            startLatch.Wait(2000);
+            Thread.Sleep(2000);
+            Interlocked.Exchange(ref runFlag[0], 1);
 
-        //    string results = "Completed " + rpcCount + " RPCs in " + runTimeMillis +
-        //                     "ms => " + ((rpcCount/(double) runTimeMillis)*1000) + " RPCs/sec, " +
-        //                     (runTimeMillis/(double) rpcCount) + " ms/RPC.";
+            string results = "Completed " + rpcCount + " RPCs in " + runTimeMillis +
+                             "ms => " + ((rpcCount/(double) runTimeMillis)*1000) + " RPCs/sec, " +
+                             (runTimeMillis/(double) rpcCount) + " ms/RPC.";
 
-        //    Debug.WriteLine(results);
-        //}
+            Debug.WriteLine(results);
+        }
 
         [Test]
         public void TestSendAfterChannelClose()
