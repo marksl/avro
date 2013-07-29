@@ -96,11 +96,38 @@ namespace Avro.ipc
             channel.Connect(host, port);
         }
 
+        private DateTime? lastReconnect;
+        private int failedAttempts;
+
+        public static int ExponentialDelay(int failedAttempts)
+        {
+            int delayInSeconds = (1 << failedAttempts) * 1000;
+
+            return Math.Min(delayInSeconds, 32000);
+        }
+
         public void Reconnect()
         {
             if (host == null)
                 throw new InvalidOperationException("Cannot reconnect to a null host");
 
+            if (lastReconnect != null)
+            {
+                // If failed within the last 5 seconds, wait a bit longer before retrying again.
+                if (DateTime.UtcNow.Subtract(lastReconnect.Value) < new TimeSpan(0, 0, 5))
+                {
+                    int delayInMilliseconds = ExponentialDelay(failedAttempts++);
+
+                    Thread.Sleep(delayInMilliseconds);
+                }
+                else
+                {
+                    failedAttempts = 0;
+                }
+            }
+            
+            lastReconnect = DateTime.UtcNow;
+            
             channel = CreateSocket();
             Connect();
 

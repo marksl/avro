@@ -85,6 +85,7 @@
     <Compile Include="File\FileTests.cs" />
     <Compile Include="Generic\GenericTests.cs" />
     <Compile Include="IO\BinaryCodecTests.cs" />
+    <Compile Include="Ipc\ExponentialDelay.cs" />
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\All.cs" />
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\AllCallback.cs" />
     <Compile Include="Ipc\GeneratedFiles\org\apache\avro\test\AllEnum.cs" />
