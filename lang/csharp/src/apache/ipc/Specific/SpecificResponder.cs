@@ -29,18 +29,6 @@ namespace Avro.ipc.Specific
     public class SpecificResponder<T> : GenericResponder
         where T : class, ISpecificProtocol
     {
-        private static readonly Dictionary<string, string> BaseTypes =
-            new Dictionary<string, string>
-                {
-                    {"string", typeof (string).FullName},
-                    {"int", typeof (int).FullName},
-                    {"bytes", typeof (byte[]).FullName},
-                    {"float", typeof (float).FullName},
-                    {"double", typeof (double).FullName},
-                    {"boolean", typeof (bool).FullName},
-                    {"long", typeof (long).FullName}
-                };
-
         private readonly T impl;
 
         public SpecificResponder(T impl)
@@ -59,9 +47,7 @@ namespace Avro.ipc.Specific
 
             foreach (Field field in message.Request.Fields)
             {
-                string name = GetName(field);
-
-                Type type = ObjectCreator.Instance.GetType(name, field.Schema.Tag);
+                Type type = ObjectCreator.Instance.GetType(field.Schema);
                 parameterTypes[i] = type;
                 parameters[i] = ((GenericRecord) request)[field.Name];
 
@@ -77,25 +63,6 @@ namespace Avro.ipc.Specific
             {
                 throw ex.InnerException;
             }
-        }
-
-        private static string GetName(Field field)
-        {
-            var namedSchema = field.Schema as NamedSchema;
-            string name = namedSchema != null ? namedSchema.Fullname : field.Schema.Name;
-
-            if (name == "array")
-            {
-                name= ((((Avro.ArraySchema) (field.Schema))).ItemSchema).Name;
-            }
-            else if (name == "map")
-            {
-                name = (((Avro.MapSchema)(field.Schema)).ValueSchema).Name;
-                //return string.Format("System.Collections.Generic.IDic<{0}>", ((((Avro.ArraySchema)(field.Schema))).ItemSchema).Name);
-            }
-
-            string value;
-            return BaseTypes.TryGetValue(name, out value) ? value : name;
         }
 
         public override void WriteError(Schema schema, object error, Encoder output)
